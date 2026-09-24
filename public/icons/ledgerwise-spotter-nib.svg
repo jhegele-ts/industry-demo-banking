@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width:0;height:0;visibility:hidden;">
+  <defs/>
+  <!--
+    LedgerWise — Spotter icon override (rd-icon-spotter).
+    A fountain-pen nib: the thing you write a ledger with, and the shape a
+    quill reduces to once it has to survive 16px. One subpath for the body,
+    two punched out by fill-rule="evenodd" — the breather hole and the slit.
+    fill="currentColor" so it inherits whatever colour ThoughtSpot paints the
+    icon, which keeps it legible on both the light chat surface and the dark
+    liveboard chrome.
+  -->
+  <symbol id="rd-icon-spotter" viewBox="0 0 48 48" fill="currentColor">
+    <path fill-rule="evenodd" clip-rule="evenodd"
+      d="M10.5 15.5 C10.5 9.7 16.5 5.5 24 5.5 C31.5 5.5 37.5 9.7 37.5 15.5 L24 44.5 Z
+         M20.7 17.5 a3.3 3.3 0 1 0 6.6 0 a3.3 3.3 0 1 0 -6.6 0 Z
+         M22.7 22.4 L25.3 22.4 L24 38.5 Z"/>
+  </symbol>
+</svg>

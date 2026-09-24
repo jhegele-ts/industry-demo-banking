@@ -1,0 +1,694 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   LedgerWise design tokens — lifted verbatim from the Claude Design canvas
+   "LedgerWise Banking" (artboards: Landing / Login / Home / Analytics).
+   Every hex below appears in those artboards; don't invent new ones.
+--------------------------------------------------------------------------- */
+:root {
+  /* Grounds */
+  --lw-paper:      #F2EFE7;  /* page background */
+  --lw-paper-2:    #E9E4D6;  /* banded / recessed background */
+  --lw-paper-3:    #FFFDF6;  /* raised card */
+
+  /* Ink */
+  --lw-ink:        #14120F;  /* near-black: text, rules, dark panels */
+  --lw-ink-2:      #3A3630;  /* body copy on paper, hairlines on dark */
+  --lw-ink-3:      #2A2621;  /* hairline on dark */
+  --lw-muted:      #6B6257;  /* mono labels on paper */
+  --lw-muted-2:    #A39B8C;  /* mono labels on ink */
+
+  /* Rules */
+  --lw-rule:       #C9C2B2;
+  --lw-rule-2:     #EAE4D6;
+  --lw-rule-3:     #E2DCCB;
+
+  /* Accents */
+  --lw-blue:       #1B1AE0;  /* primary */
+  --lw-blue-lt:    #9A9AF0;
+  --lw-blue-pale:  #E4E4FA;
+  --lw-orange:     #C24A12;  /* critical / alert */
+  --lw-orange-dk:  #A63C0C;
+  --lw-orange-lt:  #E9A06B;
+  --lw-amber:      #C8871F;  /* high severity */
+  --lw-amber-dk:   #8A5A08;
+  --lw-err-bg:     #FAEDE4;
+  --lw-err-ink:    #8A3409;
+
+  --background: var(--lw-paper);
+  --foreground: var(--lw-ink);
+}
+
+@theme inline {
+  --color-background:   var(--background);
+  --color-foreground:   var(--foreground);
+  --color-lw-paper:     var(--lw-paper);
+  --color-lw-paper-2:   var(--lw-paper-2);
+  --color-lw-paper-3:   var(--lw-paper-3);
+  --color-lw-ink:       var(--lw-ink);
+  --color-lw-ink-2:     var(--lw-ink-2);
+  --color-lw-muted:     var(--lw-muted);
+  --color-lw-muted-2:   var(--lw-muted-2);
+  --color-lw-rule:      var(--lw-rule);
+  --color-lw-blue:      var(--lw-blue);
+  --color-lw-blue-lt:   var(--lw-blue-lt);
+  --color-lw-orange:    var(--lw-orange);
+  --font-serif: var(--font-instrument-serif);
+  --font-sans:  var(--font-archivo);
+  --font-mono:  var(--font-plex-mono);
+}
+
+/* --- base ---------------------------------------------------------------- */
+html, body { margin: 0; padding: 0; background: var(--lw-paper); overflow-x: hidden; }
+* { box-sizing: border-box; }
+
+body {
+  background: var(--lw-paper);
+  color: var(--lw-ink);
+  font-family: var(--font-archivo), Helvetica, Arial, sans-serif;
+}
+
+a { color: var(--lw-blue); text-decoration: none; }
+a:hover { color: var(--lw-orange); }
+input::placeholder { color: var(--lw-muted-2); }
+
+:focus-visible { outline: 2px solid var(--lw-blue); outline-offset: 2px; }
+::selection { background: var(--lw-blue-pale); }
+
+/* --- type ---------------------------------------------------------------- */
+.lw-serif {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+.lw-mono {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+.lw-mono-sm { font-size: 11px; letter-spacing: 0.1em; }
+.lw-mono-lg { font-size: 12px; letter-spacing: 0.08em; }
+
+/* --- controls ------------------------------------------------------------ */
+.lw-btn {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  padding: 16px 24px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color .15s, color .15s, border-color .15s;
+}
+.lw-btn-primary  { background: var(--lw-blue); color: var(--lw-paper); border-color: var(--lw-blue); }
+.lw-btn-primary:hover  { background: var(--lw-ink); border-color: var(--lw-ink); color: var(--lw-paper); }
+.lw-btn-outline  { background: transparent; color: var(--lw-ink); border-color: var(--lw-ink); }
+.lw-btn-outline:hover  { background: var(--lw-ink); color: var(--lw-paper); }
+.lw-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.lw-input {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--lw-ink);
+  background: var(--lw-paper);
+  border: 1.5px solid var(--lw-ink);
+  border-radius: 6px;
+  padding: 15px 14px;
+  outline: none;
+  width: 100%;
+}
+.lw-input:focus { border-color: var(--lw-blue); box-shadow: 4px 4px 0 var(--lw-blue); }
+
+/* Nav link on the dark app header */
+.lw-navlink { color: var(--lw-muted-2); padding: 7px 12px; border-radius: 6px; }
+.lw-navlink:hover { color: var(--lw-paper); }
+.lw-navlink[data-active="true"] { background: var(--lw-paper); color: var(--lw-ink); }
+.lw-navlink[data-active="true"]:hover { color: var(--lw-ink); }
+/* Nav items with no page behind them. Same weight as the rest so the bar
+   still reads as a full product nav, but no pointer and no hover response —
+   nothing invites the click that would do nothing. */
+.lw-navlink[data-inert] { cursor: default; }
+.lw-navlink[data-inert]:hover { color: var(--lw-muted-2); }
+
+/* Ghost chip used for Marginal's suggested prompts (on ink) */
+.lw-chip-ghost {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.06em;
+  background: transparent; color: var(--lw-muted-2);
+  border: 1px solid var(--lw-ink-2); border-radius: 6px;
+  padding: 9px 12px; cursor: pointer;
+}
+.lw-chip-ghost:hover { color: var(--lw-paper); border-color: var(--lw-paper); }
+
+/* Solid chip used for follow-ups (on paper) */
+.lw-chip {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.04em;
+  background: var(--lw-paper); color: var(--lw-ink);
+  border: 1.5px solid var(--lw-ink); border-radius: 6px;
+  padding: 9px 12px; cursor: pointer;
+}
+.lw-chip:hover { background: var(--lw-ink); color: var(--lw-paper); }
+
+.lw-row-link { color: var(--lw-ink); }
+.lw-row-link:hover { background: #F4F1E7; color: var(--lw-ink); }
+
+.lw-core-chip {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1.5px solid var(--lw-ink); background: var(--lw-paper);
+  padding: 12px 14px; border-radius: 8px;
+}
+.lw-core-chip:hover { background: var(--lw-ink); color: var(--lw-paper); }
+
+.lw-coverage-row:hover { background: var(--lw-paper-2); }
+
+.lw-saved-card { border: 1.5px solid var(--lw-ink); color: var(--lw-ink); background: transparent; }
+.lw-saved-card:hover { background: var(--lw-ink); color: var(--lw-paper); }
+
+/* --- animations ---------------------------------------------------------- */
+@keyframes lw-marquee-x { from { transform: translateX(0); }  to { transform: translateX(-50%); } }
+@keyframes lw-marquee-y { from { transform: translateY(0); }  to { transform: translateY(-50%); } }
+@keyframes lw-blink     { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0.15; } }
+
+.lw-blink     { animation: lw-blink 1.6s steps(1, end) infinite; }
+.lw-marquee-x { animation: lw-marquee-x 42s linear infinite; }
+.lw-marquee-y { animation: lw-marquee-y 34s linear infinite; }
+
+/* Scroll-reveal: elements start hidden only once JS has armed them, so the
+   page is fully readable if JS never runs. */
+[data-reveal].lw-armed { opacity: 0; transform: translateY(22px); }
+[data-reveal].lw-armed { transition: opacity .75s cubic-bezier(.2,.7,.2,1), transform .75s cubic-bezier(.2,.7,.2,1); }
+[data-reveal].lw-shown { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lw-blink, .lw-marquee-x, .lw-marquee-y { animation: none; }
+  [data-reveal].lw-armed { opacity: 1; transform: none; transition: none; }
+}
+
+/* --- embed --------------------------------------------------------------- */
+/* The SDK injects its own iframe; make it fill the framed slot. */
+.lw-embed-slot iframe { border: 0; width: 100%; }
+
+/* --- Marginal's markdown answers ----------------------------------------- */
+.lw-md > :first-child { margin-top: 0; }
+.lw-md > :last-child  { margin-bottom: 0; }
+.lw-md h1, .lw-md h2, .lw-md h3 {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 18px 0 8px;
+}
+.lw-md h1 { font-size: 24px; }
+.lw-md h2 { font-size: 21px; }
+.lw-md h3 { font-size: 18px; }
+.lw-md p  { margin: 0 0 10px; }
+.lw-md ul, .lw-md ol { margin: 0 0 10px; padding-left: 20px; }
+.lw-md li { margin: 4px 0; }
+.lw-md strong { font-weight: 600; }
+.lw-md code {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.88em;
+  background: var(--lw-paper-2);
+  border: 1px solid var(--lw-rule);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+.lw-md pre {
+  background: var(--lw-ink); color: var(--lw-paper);
+  border-radius: 8px; padding: 12px; overflow-x: auto; margin: 0 0 10px;
+}
+.lw-md pre code { background: none; border: none; color: inherit; padding: 0; }
+.lw-md table { border-collapse: collapse; width: 100%; margin: 0 0 10px; display: block; overflow-x: auto; }
+.lw-md th, .lw-md td { border-bottom: 1px solid var(--lw-rule); padding: 7px 10px; text-align: left; }
+.lw-md th {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lw-muted);
+}
+/* Visualizations Marginal embeds. 380px was too short for a real viz — the
+   reader ended up scrolling inside the iframe. Generous default, and
+   resize:vertical so they can grow it without touching the panel. */
+.lw-md iframe {
+  display: block;
+  width: 100%;
+  height: 560px;
+  min-height: 260px;
+  resize: vertical;
+  overflow: auto;
+  border: 1.5px solid var(--lw-ink);
+  border-radius: 8px; background: var(--lw-paper); margin: 12px 0;
+}
+.lw-md blockquote {
+  margin: 0 0 10px; padding-left: 14px;
+  border-left: 3px solid var(--lw-blue); color: var(--lw-ink-2);
+}
+
+/* --- login --------------------------------------------------------------- */
+/* Two calm columns: a near-empty ink panel carrying one typographic
+   statement, and the form. Deliberately quieter than the original artboard —
+   no marquee, no blink, no stats — at the user's request. */
+.lw-login {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  min-height: 100vh;
+}
+.lw-login-aside {
+  background: var(--lw-ink);
+  color: var(--lw-paper);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+  padding: clamp(28px, 4vw, 56px);
+}
+.lw-login-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: clamp(28px, 5vw, 72px) clamp(20px, 5vw, 64px);
+}
+.lw-login-form,
+.lw-login-foot { width: 100%; max-width: 400px; }
+.lw-login-form { display: flex; flex-direction: column; gap: 18px; }
+/* Stacked on purpose: at 400px the copyright and the three links don't fit
+   on one line of spaced mono, so make the two lines deliberate. */
+.lw-login-foot { display: flex; flex-direction: column; gap: 8px; }
+/* display lives here, not inline, so the mobile media query below can hide
+   it -- an inline display:flex would win over the class rule. */
+.lw-login-aside-bottom { display: flex; gap: 18px; flex-wrap: wrap; color: var(--lw-muted-2); }
+
+/* Softer focus than the default hard offset shadow — a ring reads calmer
+   on a form that is the whole page. Declared after .lw-input so it wins. */
+.lw-input-quiet:focus { border-color: var(--lw-blue); box-shadow: 0 0 0 3px var(--lw-blue-pale); }
+
+@media (max-width: 860px) {
+  .lw-login { grid-template-columns: 1fr; min-height: auto; }
+  .lw-login-aside { gap: 22px; padding: 20px clamp(16px, 5vw, 28px) 26px; }
+  .lw-login-aside-bottom { display: none; }
+  .lw-login-main { justify-content: flex-start; }
+}
+
+/* --- home ---------------------------------------------------------------- */
+/* Calmer than the "LedgerWise Home" artboard, by request: one card system,
+   no blink, no offset shadow, no meters or progress bars. */
+.lw-home {
+  max-width: 1480px; margin: 0 auto;
+  padding: clamp(22px, 3vw, 40px) clamp(14px, 4vw, 56px) clamp(30px, 4vw, 56px);
+  display: flex; flex-direction: column; gap: clamp(18px, 2.2vw, 28px);
+}
+.lw-home-greeting { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+.lw-ask { background: var(--lw-ink); color: var(--lw-paper); border-radius: 12px; padding: clamp(20px, 2.6vw, 32px); }
+.lw-ask-row   { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+.lw-ask-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+.lw-card { background: var(--lw-paper-3); border: 1.5px solid var(--lw-ink); border-radius: 12px; overflow: hidden; }
+.lw-card-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 16px 20px 12px; border-bottom: 1px solid var(--lw-rule);
+}
+.lw-card-title { font-size: 22px; line-height: 1; margin: 0; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+
+/* Hairlines between KPI cells that survive any wrap: every cell draws its
+   top and left edge, and the grid is shifted -1px so the outer edges clip
+   against the card's overflow:hidden. */
+.lw-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin: -1px 0 0 -1px; }
+.lw-kpi  { padding: 18px 20px 20px; border-top: 1px solid var(--lw-rule); border-left: 1px solid var(--lw-rule); min-width: 0; }
+
+.lw-home-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(16px, 2vw, 24px); align-items: start; }
+.lw-stack { display: flex; flex-direction: column; gap: clamp(16px, 2vw, 24px); }
+
+.lw-row { display: grid; gap: 14px; align-items: center; padding: 14px 20px; border-top: 1px solid var(--lw-rule); color: var(--lw-ink); }
+.lw-row:first-child { border-top: 0; }
+
+@media (max-width: 900px) { .lw-home-grid { grid-template-columns: 1fr; } }
+
+/* --- balances accordion --------------------------------------------------- */
+.lw-acc      { display: flex; flex-direction: column; gap: 10px; }
+.lw-acc-item { background: var(--lw-paper-3); border: 1.5px solid var(--lw-ink); border-radius: 12px; overflow: hidden; }
+.lw-acc-item[data-open="true"] { box-shadow: 0 18px 40px -30px rgba(20, 18, 15, 0.55); }
+
+.lw-acc-head {
+  width: 100%; display: grid; align-items: center; gap: 18px;
+  grid-template-columns: 34px minmax(0, 1fr) auto auto;
+  padding: 16px 18px; background: transparent; border: 0;
+  font: inherit; color: var(--lw-ink); text-align: left; cursor: pointer;
+}
+.lw-acc-head:hover { background: #F4F1E7; }
+
+.lw-acc-mark {
+  width: 34px; height: 34px; border-radius: 9px; flex: none;
+  background: var(--lw-blue-pale); color: var(--lw-blue);
+  display: flex; align-items: center; justify-content: center;
+}
+.lw-acc-metrics { display: flex; gap: 28px; }
+.lw-acc-panel   { border-top: 1px solid var(--lw-rule); padding: 16px 18px 18px; background: var(--lw-paper); }
+
+.lw-acc-chev { transition: transform .18s ease; }
+.lw-acc-item[data-open="true"] .lw-acc-chev { transform: rotate(90deg); }
+
+/* Below ~720px the two metric columns won't fit beside the name, so the head
+   becomes two rows: mark + name, then the metrics and the chevron under it. */
+@media (max-width: 720px) {
+  .lw-acc-head    { grid-template-columns: 34px minmax(0, 1fr) auto; gap: 12px; }
+  .lw-acc-metrics { grid-column: 1 / -1; gap: 20px; padding-left: 46px; }
+}
+
+/* --- Marginal chat panel -------------------------------------------------- */
+.lw-chat-panel {
+  width: min(900px, 100%);
+  height: min(720px, 92vh);
+  min-width: 320px;
+  min-height: 360px;
+  max-width: 96vw;
+  max-height: 92vh;
+  /* Native drag-resize from the bottom-right corner. Only applies when
+     overflow is not visible, which it already needs to be for the rounded
+     corners to clip the dark header. */
+  resize: both;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--lw-paper);
+  border: 1.5px solid var(--lw-ink);
+  border-radius: 12px;
+  /* Three layers of separation, because the panel and the page behind it are
+     the same cream and a single hairline was carrying the whole job:
+     a pale ring just outside the ink border so the edge reads against the
+     dimmed page, a tighter contact shadow, and the original deep cast. */
+  box-shadow:
+    0 0 0 1px rgba(255, 253, 246, 0.30),
+    0 2px 10px rgba(20, 18, 15, 0.30),
+    0 32px 70px -18px rgba(20, 18, 15, 0.62),
+    0 2px 0 rgba(255, 253, 246, 0.6) inset;
+}
+
+/* Maximize. A drag-resize writes inline width/height, which would beat this
+   rule, so the toggle clears those inline values first. */
+.lw-chat-panel[data-max="true"] { width: 96vw; height: 92vh; }
+
+/* Maximizing is what someone does to actually read a chart, so spend the
+   extra height on the viz rather than leaving it at its default. */
+.lw-chat-panel[data-max="true"] .lw-md iframe { height: 72vh; }
+
+/* The native resizer is close to invisible on a light ground — draw a grip
+   over it. pointer-events:none so the real handle underneath still receives
+   the drag. */
+.lw-chat-panel::after {
+  content: "";
+  position: absolute; right: 3px; bottom: 3px; width: 13px; height: 13px;
+  pointer-events: none; opacity: 0.55;
+  background:
+    linear-gradient(135deg, transparent 0 44%, var(--lw-muted) 44% 56%, transparent 56%),
+    linear-gradient(135deg, transparent 0 69%, var(--lw-muted) 69% 81%, transparent 81%);
+}
+
+/* Dragging a corner is not a phone gesture — fill the screen instead. */
+@media (max-width: 720px) {
+  .lw-chat-panel { resize: none; width: 100%; height: 92vh; max-width: 100%; }
+  .lw-chat-panel::after { display: none; }
+}
+
+/* --- landing: the page as a ledger ---------------------------------------- */
+/* Forepost makes its page a spreadsheet; this one is a ledger sheet. Ruled
+   paper, a posting-reference strip where a formula bar would be, a numbered
+   rail down the side, and schedule tabs along the bottom. */
+
+.lw-land { position: relative; padding-bottom: 44px; }
+
+/* Ruled paper. Two layers: the horizontal rules, and a single vertical
+   column rule where the rail ends. */
+.lw-ruled {
+  background-image:
+    repeating-linear-gradient(to bottom, transparent 0 43px, var(--lw-rule-2) 43px 44px);
+}
+
+/* Posting reference, in place of a formula bar. */
+.lw-postbar {
+  /* nowrap, not wrap: the bar is a fixed 40px, so wrapping at narrow widths
+     pushes a second line into the clipped overflow and reads as a smudge.
+     Clipping horizontally instead is how a real formula bar behaves. */
+  display: flex; align-items: center; gap: 18px; flex-wrap: nowrap;
+  padding: 0 clamp(14px, 3vw, 28px); height: 40px;
+  border-bottom: 1px solid var(--lw-rule);
+  background: var(--lw-paper);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 11px; color: var(--lw-muted); white-space: nowrap; overflow: hidden;
+}
+
+/* Numbered rail. Vertical text plus the line numbers a ledger page carries. */
+.lw-rail {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 46px;
+  border-right: 1px solid var(--lw-rule);
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  padding: 18px 0; pointer-events: none;
+}
+.lw-rail-text {
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lw-muted);
+}
+.lw-land-body { margin-left: 46px; }
+
+/* Tilted cards floating over the ruled ground. */
+.lw-tilt   { box-shadow: 8px 8px 0 var(--lw-ink); border: 1.5px solid var(--lw-ink); border-radius: 8px; background: var(--lw-paper-3); }
+.lw-tilt-a { transform: rotate(-2.2deg); }
+.lw-tilt-b { transform: rotate(1.6deg); }
+.lw-tilt-c { transform: rotate(-1deg); }
+
+/* Highlighter block behind one word of the headline.
+   inline-block on purpose: an inline element's background is sized from the
+   font's em box, not from line-height, so on a 0.84-leading headline the
+   block overflows into the line above. inline-block makes the box obey
+   line-height instead, keeping the swipe tight to the word. */
+.lw-hl {
+  display: inline-block;
+  line-height: 0.9;
+  padding: 0.06em 0.09em 0.03em;
+  background: var(--lw-blue);
+  color: var(--lw-paper);
+}
+
+/* Schedule tabs pinned to the bottom, doubling as section nav. */
+.lw-statusbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  display: flex; align-items: stretch; gap: 0;
+  background: var(--lw-paper); border-top: 1.5px solid var(--lw-ink);
+  font-family: var(--font-plex-mono), ui-monospace, monospace; font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.lw-statusbar a {
+  padding: 13px 16px; color: var(--lw-muted); border-right: 1px solid var(--lw-rule);
+}
+.lw-statusbar a:hover { background: var(--lw-ink); color: var(--lw-paper); }
+.lw-statusbar-end {
+  margin-left: auto; display: flex; align-items: center; gap: 8px;
+  padding: 13px 16px; color: var(--lw-muted); border-left: 1px solid var(--lw-rule);
+}
+
+@media (max-width: 860px) {
+  .lw-rail { display: none; }
+  .lw-land-body { margin-left: 0; }
+  .lw-tilt-a, .lw-tilt-b, .lw-tilt-c { transform: none; }
+  .lw-statusbar a:not(:first-child) { display: none; }
+}
+
+/* --- query gating meter (Marginal chat) ----------------------------------- */
+.lw-meter      { height: 6px; border-radius: 999px; background: var(--lw-ink-3); overflow: hidden; }
+.lw-meter span { display: block; height: 100%; border-radius: 999px; background: var(--lw-blue-lt); transition: width .3s ease; }
+.lw-meter[data-spent="true"] span { background: var(--lw-orange); }
+
+/* --- config page ---------------------------------------------------------- */
+.lw-cfg        { max-width: 720px; margin: 0 auto; padding: clamp(22px, 3vw, 44px) clamp(16px, 4vw, 40px) 64px; display: flex; flex-direction: column; gap: 22px; }
+.lw-cfg-block  { border-top: 1px solid var(--lw-rule); padding-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+.lw-cfg-row    { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.lw-cfg-help   { font-size: 14px; line-height: 1.55; color: var(--lw-ink-2); margin: 0; max-width: 52ch; }
+
+/* Segmented control */
+.lw-seg        { display: inline-flex; border: 1.5px solid var(--lw-ink); border-radius: 8px; overflow: hidden; flex: none; }
+.lw-seg button {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 10px 16px; border: 0; background: var(--lw-paper); color: var(--lw-ink); cursor: pointer;
+}
+.lw-seg button + button { border-left: 1.5px solid var(--lw-ink); }
+.lw-seg button[aria-pressed="true"] { background: var(--lw-ink); color: var(--lw-paper); }
+
+/* Switch */
+.lw-switch { position: relative; width: 46px; height: 26px; border-radius: 999px; border: 1.5px solid var(--lw-ink); background: var(--lw-paper-2); cursor: pointer; flex: none; transition: background .16s; }
+.lw-switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: var(--lw-ink); transition: transform .16s; }
+.lw-switch[aria-checked="true"] { background: var(--lw-blue); border-color: var(--lw-blue); }
+.lw-switch[aria-checked="true"]::after { transform: translateX(20px); background: var(--lw-paper); }
+
+.lw-hk       { border: 1.5px solid var(--lw-ink); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: var(--lw-paper-3); }
+.lw-hk-combo { font-family: var(--font-plex-mono), ui-monospace, monospace; font-size: 13px; border: 1.5px solid var(--lw-ink); border-radius: 6px; padding: 8px 12px; background: var(--lw-paper-2); white-space: nowrap; }
+
+/* --- Retention flag dialog: the writeback beat raised from /balances -----
+   Scoped entirely under .lw-flag*. Delete this block, RetentionFlagDialog.tsx,
+   lib/customActions.ts and stores/retentionFlags.ts to remove the feature.
+   Colours are existing --lw-* tokens only. ------------------------------- */
+.lw-flag-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgb(20 18 15 / 0.68);
+}
+
+.lw-flag {
+  width: min(560px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  background: var(--lw-paper);
+  border: 1px solid var(--lw-ink);
+  box-shadow: 0 24px 60px rgb(20 18 15 / 0.3);
+}
+
+.lw-flag-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background: var(--lw-ink);
+  color: var(--lw-paper);
+}
+
+.lw-flag-eyebrow { letter-spacing: 0.16em; color: var(--lw-blue-lt); }
+.lw-flag-title   { margin: 6px 0 0; font-size: 24px; line-height: 1.1; letter-spacing: -0.01em; }
+
+.lw-flag-x {
+  flex: none;
+  font: inherit;
+  font-size: 22px;
+  line-height: 1;
+  padding: 4px 10px;
+  border: 1px solid var(--lw-ink-2);
+  background: transparent;
+  color: var(--lw-paper);
+  cursor: pointer;
+}
+.lw-flag-x:hover { border-color: var(--lw-paper); }
+
+.lw-flag-body { padding: 20px; display: flex; flex-direction: column; gap: 18px; }
+
+/* Read-only context carried across from the board. */
+.lw-flag-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--lw-rule);
+  background: var(--lw-paper-3);
+}
+.lw-flag-facts dt { letter-spacing: 0.1em; color: var(--lw-muted); }
+.lw-flag-facts dd { margin: 6px 0 0; font-size: 15px; line-height: 1.35; overflow-wrap: anywhere; }
+
+.lw-flag-field { display: flex; flex-direction: column; gap: 8px; }
+.lw-flag-field > span { letter-spacing: 0.1em; color: var(--lw-muted); }
+
+.lw-flag-select,
+.lw-flag-note {
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 10px 12px;
+  border: 1px solid var(--lw-rule);
+  background: var(--lw-paper-3);
+  color: var(--lw-ink);
+  width: 100%;
+}
+.lw-flag-note { resize: vertical; }
+.lw-flag-select:focus-visible,
+.lw-flag-note:focus-visible { outline: 2px solid var(--lw-blue); outline-offset: -1px; }
+
+.lw-flag-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+.lw-flag-btn { font-size: 11px; padding: 11px 18px; }
+
+.lw-flag-submit {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  border: 1px solid var(--lw-blue);
+  background: var(--lw-blue);
+  color: var(--lw-paper);
+  cursor: pointer;
+}
+.lw-flag-submit:hover:not(:disabled) { background: var(--lw-ink); border-color: var(--lw-ink); }
+.lw-flag-submit:disabled { opacity: 0.45; cursor: not-allowed; }
+.lw-flag-submit:focus-visible { outline: 2px solid var(--lw-ink); outline-offset: 2px; }
+
+.lw-flag-done { margin: 0; font-size: 15px; line-height: 1.6; }
+
+/* --- Balances: deposit-mix bars ------------------------------------------
+   A stacked bar per region, scaled against the largest region so the track
+   gets used — five bars at their true share of the platform (13-31%) would
+   all look alike. IRA is the darkest segment deliberately: it is about two
+   thirds of this book, and the bar exists so that reads before any figure
+   does. Tokens only. ----------------------------------------------------- */
+.lw-mix        { display: block; min-width: 0; }
+.lw-mix-track  { display: block; width: 100%; height: 8px; background: var(--lw-paper-2); border-radius: 999px; overflow: hidden; }
+.lw-mix-fill   { display: flex; height: 100%; border-radius: 999px; overflow: hidden; transition: width .3s ease; }
+.lw-mix-seg    { display: block; height: 100%; }
+
+/* Second row of the accordion header, spanning its full width. */
+.lw-acc-barrow {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-left: 46px;
+}
+.lw-acc-barrow .lw-mix { flex: 1 1 auto; }
+.lw-acc-share { flex: none; color: var(--lw-muted); white-space: nowrap; }
+
+/* The same bar under Platform total, at true proportions rather than scaled. */
+.lw-mix-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 18px 2px;
+}
+.lw-mix-summary .lw-mix-track { flex: 1 1 260px; height: 10px; }
+
+.lw-mix-legend { display: flex; flex-wrap: wrap; gap: 14px; color: var(--lw-muted); white-space: nowrap; }
+.lw-mix-legend > span { display: inline-flex; align-items: center; gap: 6px; }
+.lw-mix-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lw-mix-fill { transition: none; }
+}
+
+@media (max-width: 760px) {
+  .lw-acc-barrow { padding-left: 0; flex-wrap: wrap; gap: 8px; }
+  .lw-acc-share  { flex: 1 0 100%; }
+}
+
+/* Dark variant of the card header. A modifier, not a change to
+   .lw-card-head — /home uses that class for four other cards that should
+   stay on paper. The card's overflow:hidden clips this to its top corners,
+   and the padding evens up because a filled bar shows the asymmetry that
+   16/12 hides on paper. */
+.lw-card-head-ink {
+  background: var(--lw-ink);
+  color: var(--lw-paper);
+  border-bottom-color: var(--lw-ink);
+  padding: 15px 20px;
+}

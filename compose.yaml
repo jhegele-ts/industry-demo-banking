@@ -1,0 +1,37 @@
+# Local Docker testing only — Coolify does its own build/run, it doesn't use
+# this file. Run with: npm run docker:up (wraps `docker compose --env-file
+# .env.local up --build -d`, so every var below is read from that one file
+# instead of being retyped on the command line).
+services:
+  ledgerwise:
+    build:
+      context: .
+      args:
+        # Bare names (no value) tell Compose to fill these in from its own
+        # interpolation environment — supplied by --env-file .env.local —
+        # then pass them through as real Docker build args.
+        - NEXT_PUBLIC_TS_HOST
+        - NEXT_PUBLIC_LIVEBOARD_ID
+        - NEXT_PUBLIC_SPOTTER_MODEL_ID
+        - NEXT_PUBLIC_TAB_ID_OVERVIEW
+        - NEXT_PUBLIC_TAB_ID_CUSTOMER
+        - NEXT_PUBLIC_TAB_ID_PRODUCT
+        - NEXT_PUBLIC_TAB_ID_BALANCES
+        - NEXT_PUBLIC_BRAND_NAME
+        - NEXT_PUBLIC_SPOTTER_PERSONA_NAME
+        - NEXT_PUBLIC_SPOTTER_CARD_LABEL
+        - NEXT_PUBLIC_DEMO_USERS
+        - NEXT_PUBLIC_EMBED_CSS_URL
+        - NEXT_PUBLIC_ICON_SPRITE_URL
+        - NEXT_PUBLIC_FILTER_COL_REGION
+        - NEXT_PUBLIC_FILTER_COL_STATE
+        - NEXT_PUBLIC_FILTER_COL_DATE
+    # Loads every var in .env.local into the running container — this is
+    # what supplies the runtime secrets (TS_SECRET_KEY, TS_ORG_ID,
+    # ANTHROPIC_API_KEY, TS_MCP_URL). Harmlessly also sets the NEXT_PUBLIC_*
+    # vars again at runtime; they have no effect there since they're already
+    # baked into the client bundle from the build args above.
+    env_file:
+      - .env.local
+    ports:
+      - "3000:3000"

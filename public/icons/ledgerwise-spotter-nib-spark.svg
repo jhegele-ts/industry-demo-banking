@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width:0;height:0;visibility:hidden;">
+  <defs/>
+  <!--
+    LedgerWise — Spotter icon override (rd-icon-spotter), variant.
+    The same nib, tilted, with a four-point spark: the near-universal "this is
+    AI" signifier. Reads richer at 24px and up; at 16px the spark starts to
+    close up, so prefer the plain nib if the icon appears inline in text.
+  -->
+  <symbol id="rd-icon-spotter" viewBox="0 0 48 48" fill="currentColor">
+    <g transform="rotate(-14 24 26)">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M13 21 C13 15.8 18 12 24 12 C30 12 35 15.8 35 21 L24 44.5 Z
+           M21.4 22.6 a2.6 2.6 0 1 0 5.2 0 a2.6 2.6 0 1 0 -5.2 0 Z
+           M22.9 26.5 L25.1 26.5 L24 39.5 Z"/>
+    </g>
+    <path d="M36.5 4 C37.3 8.4 38.6 9.7 43 10.5 C38.6 11.3 37.3 12.6 36.5 17
+             C35.7 12.6 34.4 11.3 30 10.5 C34.4 9.7 35.7 8.4 36.5 4 Z"/>
+  </symbol>
+</svg>
